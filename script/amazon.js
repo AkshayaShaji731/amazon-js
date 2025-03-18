@@ -1,7 +1,7 @@
 
-let productHtml=''
-products.forEach((products)=>{
-    productHtml +=`
+let productHtml = ''
+products.forEach((products) => {
+  productHtml += `
     <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -14,18 +14,18 @@ products.forEach((products)=>{
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${products.rating.stars*10}.png">
+              src="images/ratings/rating-${products.rating.stars * 10}.png">
             <div class="product-rating-count link-primary">
             ${products.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            ${(products.priceCents/100).toFixed(2)}
+            ${(products.priceCents / 100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-${products.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -52,33 +52,36 @@ products.forEach((products)=>{
         </div>`
 })
 
-document.querySelector(".js-product-grid").innerHTML=productHtml
-document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
-    button.addEventListener('click',()=>{
-        const productId=button.dataset.productId
-        
-        let matchingItem
-        cart.forEach(item => {
-            if(productId===item.productId){
-                matchingItem=item
-            }
-        });
+document.querySelector(".js-product-grid").innerHTML = productHtml
+document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+  button.addEventListener('click', () => {
+    const productId = button.dataset.productId
+    let quantity = document.querySelector(`.js-quantity-${productId}`)
+    let quantityValue=Number(quantity.value)
+    // console.log(typeof quantityValue);
+    let matchingItem
+    cart.forEach(item => {
+      if (productId === item.productId) {
+        matchingItem = item
+      }
+    });
 
-        if(matchingItem){
-            matchingItem.quantity+=1;
-        }
-        else{
-            cart.push({
-                productId:productId,
-                quantity:1
-            })
-        }
+    if (matchingItem) {
+      matchingItem.quantity += quantityValue;
+    }
+    else {
+      cart.push({
+        productId: productId,
+        quantity: quantityValue
+      })
+    }
 
-        let cartQuantity=0
+    let cartQuantity = 0
 
-        cart.forEach((item)=>{
-          cartQuantity+=item.quantity
-        })
-        document.querySelector('.js-cart-quantity').innerText=cartQuantity
+    cart.forEach((item) => {
+      cartQuantity += item.quantity
     })
+    document.querySelector('.js-cart-quantity').innerText = cartQuantity
+  })
+
 })
