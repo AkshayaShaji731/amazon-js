@@ -2,9 +2,9 @@ import {cart,addToCart} from '../data/cart.js'
 import { products } from '../data/products.js'
 import { formatCurrency } from './utils/money.js'
 
-let productHtml=''
-products.forEach((products)=>{
-    productHtml +=`
+let productHtml = ''
+products.forEach((products) => {
+  productHtml += `
     <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -17,18 +17,18 @@ products.forEach((products)=>{
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${products.rating.stars*10}.png">
+              src="images/ratings/rating-${products.rating.stars * 10}.png">
             <div class="product-rating-count link-primary">
             ${products.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            ${formatCurrency(products.priceCents)}
+            ${(products.priceCents/100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-${products.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -56,21 +56,32 @@ products.forEach((products)=>{
 })
 
 document.querySelector(".js-product-grid").innerHTML=productHtml
-
-  
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     button.addEventListener('click',()=>{
         const productId=button.dataset.productId
-        addToCart(productId)
-        updateCartQuantity()
+        
+        let matchingItem
+        cart.forEach(item => {
+            if(productId===item.productId){
+                matchingItem=item
+            }
+        });
+
+        if(matchingItem){
+            matchingItem.quantity+=1;
+        }
+        else{
+            cart.push({
+                productId:productId,
+                quantity:1
+            })
+        }
+
+        let cartQuantity=0
+
+        cart.forEach((item)=>{
+          cartQuantity+=item.quantity
+        })
+        document.querySelector('.js-cart-quantity').innerText=cartQuantity
     })
 })
-
-function updateCartQuantity(){
-  let cartQuantity=0
-
-  cart.forEach((cartItem)=>{
-    cartQuantity+=cartItem.quantity
-  })
-  document.querySelector('.js-cart-quantity').innerText=cartQuantity
-}
