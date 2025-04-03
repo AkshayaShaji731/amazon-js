@@ -4,9 +4,11 @@ import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 
-// const today=dayjs()
-// const deliveryDate=today.add(7,"days");
-// console.log(deliveryDate.format('dddd ,MMMM D'));
+const today=dayjs()
+const deliveryDate=today.add(7,"days");
+console.log(deliveryDate.format('dddd ,MMMM D'));
+
+function renderOrderSummary(){
 
 
 let cartSummaryHTML = " "
@@ -125,5 +127,8 @@ document.querySelectorAll('.js-delivery-option').forEach((element)=>{
     const{productId,deliveryOptionId}=element.dataset
     console.log(productId,deliveryOptionId);
     updateDeliveryOption(productId,deliveryOptionId)
+    renderOrderSummary() 
   })
 })
+}
+renderOrderSummary()
