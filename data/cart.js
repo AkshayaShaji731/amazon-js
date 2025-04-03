@@ -49,7 +49,7 @@ function saveToStorage(){
 
     cart=newCart
 
-    saveToStorage()
+    saveToStorage() 
   }
   
   export function updateDeliveryOption(productId,deliveryOptionID){
