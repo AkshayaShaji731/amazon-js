@@ -75,6 +75,27 @@ const product1=new product(  {
 // }
 
 // logThis.call("hello");
+export function loadProductsFetch(){
+  const Promise=fetch
+  ('https://supersimplebackend.dev/products')
+  .then((response)=>{
+    return response.json();
+  }).then((productsData)=>{
+    products= productsData.map((productDetails)=>{
+      if(productDetails.type==='clothing'){
+        return new Clothing(productDetails)
+      }
+      return new product(productDetails)
+    });
+    console.log('load products')
+  })
+  return Promise
+}
+
+// loadProductsFetch().then(()=>{
+//   console.log("next step");
+// })
+
 
 export let products=[]
 
