@@ -52,7 +52,7 @@ class Clothing extends product{
     `
   }
 }
-
+ 
   
 const product1=new product(  {
   id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -69,6 +69,12 @@ const product1=new product(  {
     "apparel"
   ]
 })
+
+function logThis(){
+  console.log(this);
+}
+// logThis()
+logThis.call("hello");
   
   export const products = [
   {
