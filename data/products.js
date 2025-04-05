@@ -70,11 +70,11 @@ const product1=new product(  {
   ]
 })
 
-function logThis(){
-  console.log(this);
-}
-// logThis()
-logThis.call("hello");
+// function logThis(){
+//   console.log(this);
+// }
+
+// logThis.call("hello");
   
   export const products = [
   {
